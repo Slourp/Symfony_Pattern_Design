@@ -5,6 +5,7 @@ ARG GROUP_ID
 ARG USER
 
 
+RUN apk add --update linux-headers
 RUN apk add --no-cache bash git mysql-client msmtp perl wget procps shadow libzip libpng libjpeg-turbo libwebp freetype icu gd
 
 RUN apk add --no-cache --virtual build-essentials \
