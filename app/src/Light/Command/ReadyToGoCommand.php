@@ -10,15 +10,10 @@ use App\Light\Entities\YellowLight;
 class ReadyToGoCommand extends Command
 {
     public function __construct(
-        YellowLight $yellowLight,
-        RedLight $redLight,
-        GreenLight $greenLight
+        protected YellowLight $yellowLight,
+        protected RedLight $redLight,
+        protected GreenLight $greenLight
     ) {
-        parent::__construct(
-            $yellowLight,
-            $redLight,
-            $greenLight
-        );
     }
 
     public function execute()

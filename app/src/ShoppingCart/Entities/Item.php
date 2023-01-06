@@ -4,22 +4,22 @@ namespace App\ShoppingCart\Entities;
 
 class Item
 {
-    private $name;
-    private $cost;
+    protected $name;
+    protected $price;
 
-    public function __construct(string $name, float $cost)
+    public function __construct($name, $price)
     {
         $this->name = $name;
-        $this->cost = $cost;
+        $this->price = $price;
     }
 
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getCost(): float
+    public function getPrice()
     {
-        return $this->cost;
+        return $this->price;
     }
 }

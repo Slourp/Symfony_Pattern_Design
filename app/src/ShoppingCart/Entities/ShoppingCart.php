@@ -2,21 +2,25 @@
 
 namespace App\ShoppingCart\Entities;
 
-class ShoppingCart
+class ShoppingCart implements ShoppingCart
+
 {
-    private $items = [];
+    protected $items;
 
-    public function addItem(Item $item, int $quantity)
+    public function __construct()
     {
-        !isset($this->items[$item->getName()]) && $this->items[$item->getName()] = [
-            'item' => $item,
-            'quantity' => 0,
-        ];
-
-        $this->items[$item->getName()]['quantity'] += $quantity;
+        $this->items = [];
     }
 
-    public function removeItem(Item $item, int $quantity)
+    public function addItem($item, $quantity)
+    {
+        $this->items[$item->getName()] = [
+            'item' => $item,
+            'quantity' => $quantity,
+        ];
+    }
+
+    public function removeItem($item, $quantity)
     {
         if (!isset($this->items[$item->getName()])) return;
 
@@ -25,19 +29,26 @@ class ShoppingCart
         if ($this->items[$item->getName()]['quantity'] <= 0) unset($this->items[$item->getName()]);
     }
 
-    public function getTotalCost(): float
+    public function getTotal()
     {
-        $totalCost = 0.0;
-        foreach ($this->items as $item) $totalCost += $item['item']->getCost() * $item['quantity'];
+        $total = 0;
 
-        return $totalCost;
+        foreach ($this->items as $item) $total += $item['item']->getPrice() * $item['quantity'];
+
+        return $total;
     }
 
-    public function getItemCount(): int
+    public function getItemCount()
     {
-        $itemCount = 0;
-        foreach ($this->items as $item) $itemCount += $item['quantity'];
-        return $itemCount;
+        $count = 0;
+        foreach ($this->items as $item) $count += $item['quantity'];
+
+        return $count;
+    }
+
+    public function getItemList()
+    {
+        return $this->items;
     }
 
     public function clear()
@@ -45,19 +56,23 @@ class ShoppingCart
         $this->items = [];
     }
 
-    public function isEmpty(): bool
+    public function purchase()
     {
-        return empty($this->items);
+        // ...
     }
 
-    public function applyDiscount(float $discount): float
+    public function addDiscountCode($code)
     {
-        $totalCost = $this->getTotalCost();
-        return $totalCost * (1 - $discount);
+        // ...
     }
 
-    public function getItems(): array
+    public function getTaxAmount($state)
     {
-        return array_values($this->items);
+        // ...
+    }
+
+    public function getShippingCost($zipCode)
+    {
+        // ...
     }
 }
